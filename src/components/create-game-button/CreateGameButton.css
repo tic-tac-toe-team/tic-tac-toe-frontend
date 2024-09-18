@@ -1,0 +1,19 @@
+.create-game-button {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    padding: 10px 30px;
+
+    font-size: 16px;
+    color: white;
+
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-game-button:hover {
+    background-color: #45a049;
+}
