@@ -1,0 +1,9 @@
+.game-room {
+    width: 200px;
+    font-size: 16px;
+    color: white;
+    background-color: #ed8787;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
