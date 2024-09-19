@@ -1,8 +1,10 @@
 import React from 'react';
 import './CreateGameButton.css';
 
-export default function CreateGameButton() {
+const CreateGameButton = () => {
     return (
         <button className="create-game-button">Create new game</button>
     );
 }
+
+export default CreateGameButton;

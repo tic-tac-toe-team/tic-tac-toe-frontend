@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import RoomList from './components/rooms-list/RoomsList';
+import RoomList from './components/RoomsList/RoomsList';
 
 function App() {
   return (

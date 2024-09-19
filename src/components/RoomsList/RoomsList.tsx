@@ -1,9 +1,9 @@
 import React from 'react';
-import GameRoom from '../game-room/GameRoom';
+import GameRoom from '../GameRoom/GameRoom';
 import './RoomsList.css';
-import CreateGameButton from '../create-game-button/CreateGameButton';
+import CreateGameButton from '../CreateGameButton/CreateGameButton';
 
-export default function RoomList() {
+const RoomList = () => {
     const rooms = [
         { id: 1, playersCount: 2 },
         { id: 2, playersCount: 1 },
@@ -33,3 +33,5 @@ export default function RoomList() {
         </div>
     );
 }
+
+export default RoomList;
