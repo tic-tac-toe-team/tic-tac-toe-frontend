@@ -1,0 +1,13 @@
+@import 'css-reset.css';
+
+:root {
+    --white: #fff;
+    --green: #4CAF50;
+    --green-darker: #45a049;
+    --blue: #007bff;
+    --blue-darker: #0056b3;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+}
