@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 20px;
     text-align: center;
+    padding: 20px;
 }
 
 .rooms-info {

@@ -3,7 +3,7 @@ import GameRoom from '../GameRoom/GameRoom';
 import './RoomsList.css';
 import CreateGameButton from '../CreateGameButton/CreateGameButton';
 
-const RoomList = () => {
+const RoomList: React.FC = () => {
     const rooms = [
         { id: 1, playersCount: 2 },
         { id: 2, playersCount: 1 },
@@ -17,9 +17,9 @@ const RoomList = () => {
 
     return (
         <div className="rooms-list">
+            <h1>Game Rooms</h1>
             <div className="rooms-info">
-                <h1>Game Rooms</h1>
-                <CreateGameButton></CreateGameButton>
+                <CreateGameButton/>
             </div>
             <div className="rooms-container">
                 {rooms.map((room) => (

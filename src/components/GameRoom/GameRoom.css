@@ -1,5 +1,6 @@
 .game-room {
-    width: 200px;
+    width: 150px;
+    padding: 10px;
     font-size: 16px;
     color: white;
     background-color: #ed8787;
