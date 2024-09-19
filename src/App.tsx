@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
-import RoomList from './components/RoomsList/RoomsList';
+import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp';
+import StartPage from './components/StartPage/StartPage';
 
 function App() {
   return (
     <>
-      <RoomList></RoomList>
+      <Login></Login>
+      {/*<SignUp></SignUp>*/}
+      {/*  <StartPage></StartPage>*/}
     </>
   );
 }
