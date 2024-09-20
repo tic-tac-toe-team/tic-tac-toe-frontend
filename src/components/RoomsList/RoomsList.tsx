@@ -1,7 +1,7 @@
 import React from 'react';
 import GameRoom from '../GameRoom/GameRoom';
-import './RoomsList.css';
 import CreateGameButton from '../CreateGameButton/CreateGameButton';
+import styles from './RoomsList.module.css';
 
 const RoomList: React.FC = () => {
     const rooms = [
@@ -16,12 +16,12 @@ const RoomList: React.FC = () => {
     ];
 
     return (
-        <div className="rooms-list">
-            <h1>Game Rooms</h1>
-            <div className="rooms-info">
-                <CreateGameButton/>
+        <div className={styles.list}>
+            <div className={styles.label}>
+                <h1>tic-tac-toe rooms</h1>
+                <p className={styles.symbol}>XO</p>
             </div>
-            <div className="rooms-container">
+            <div className={styles.container}>
                 {rooms.map((room) => (
                     <GameRoom
                         key={room.id}
@@ -29,6 +29,9 @@ const RoomList: React.FC = () => {
                         playersCount={room.playersCount}
                     />
                 ))}
+            </div>
+            <div className={styles['create-button']}>
+                <CreateGameButton/>
             </div>
         </div>
     );

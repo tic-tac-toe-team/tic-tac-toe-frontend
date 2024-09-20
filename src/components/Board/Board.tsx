@@ -1,11 +1,12 @@
 import React from 'react';
 import { BoardProps } from '../../types/board-props';
 import Cell from '../Cell/Cell';
-import './Board.css';
+import styles from './Board.module.css';
+
 
 const Board: React.FC<BoardProps> = ({ cells, onCellClick }) => {
     return (
-        <div className="board">
+        <div className={styles.board}>
             {cells.map((cell, index) => (
                 <Cell
                     key={index}

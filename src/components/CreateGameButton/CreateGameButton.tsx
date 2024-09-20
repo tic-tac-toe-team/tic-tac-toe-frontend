@@ -1,9 +1,9 @@
 import React from 'react';
-import './CreateGameButton.css';
+import styles from './CreateGameButton.module.css';
 
 const CreateGameButton = () => {
     return (
-        <button className="create-game-button">Create new game</button>
+        <button className={styles.button}>+</button>
     );
 }
 

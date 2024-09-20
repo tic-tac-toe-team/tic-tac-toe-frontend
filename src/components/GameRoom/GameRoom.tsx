@@ -1,12 +1,12 @@
 import React from 'react';
-import './GameRoom.css';
 import { RoomProps } from '../../types/room-props';
+import styles from './GameRoom.module.css';
 
 const GameRoom: React.FC<RoomProps> = ({ id, playersCount }) => (
-    <div className="game-room">
+    <button className={styles.button}>
         <p>Room {id}</p>
         <p>Players: {playersCount}</p>
-    </div>
+    </button>
 );
 
 export default GameRoom;

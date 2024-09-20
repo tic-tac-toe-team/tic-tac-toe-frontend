@@ -1,0 +1,14 @@
+.info {
+    display: flex;
+    justify-content: center;
+}
+
+.label {
+    padding: 15px;
+    color: rgba(25,42,50,255);
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #a8bec9;
+    border-radius: 10px;
+    text-transform: uppercase;
+}

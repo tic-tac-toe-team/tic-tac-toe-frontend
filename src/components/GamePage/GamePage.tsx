@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './GamePage.css';
 import Board from '../Board/Board';
 import Info from '../Info/Info';
 import Player from "../Player/Player";
 import LeaveGameButton from "../LeaveGameButton/LeaveGameButton";
+import styles from './GamePage.module.css';
 
 const GamePage: React.FC = () => {
     const generateInitialCells = () => {
@@ -12,7 +12,11 @@ const GamePage: React.FC = () => {
 
     const [cells, setCells] = useState<('X' | 'O' | '')[]>(generateInitialCells);
     const [currentPlayer, setCurrentPlayer] = useState<'X' | 'O'>('X');
-    const [playerName, setPlayerName] = useState('Player1');
+
+    const players = [
+        { name: 'Player2', symbol: 'O' },
+        { name: 'Player1', symbol: 'X' },
+    ];
 
     const handleCellClick = (index: number) => {
         const selectedCell = cells[index];
@@ -28,12 +32,19 @@ const GamePage: React.FC = () => {
     };
 
     return (
-        <div className="game-page">
-            <Player playerName={playerName} />
-            <Info currentPlayer={currentPlayer} />
-            <Board cells={cells} onCellClick={handleCellClick} />
-            <Player playerName={playerName} />
-            <LeaveGameButton />
+        <div className={styles.game}>
+            <div className={styles.players}>
+                {players.map((player, index) => (
+                    <Player key={index} player={player}/>
+                ))}
+            </div>
+            <div className={styles.board}>
+                <Info currentPlayer={currentPlayer}/>
+                <Board cells={cells} onCellClick={handleCellClick}/>
+            </div>
+            <div className={styles.container}>
+                <LeaveGameButton/>
+            </div>
         </div>
     );
 };

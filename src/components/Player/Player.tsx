@@ -1,12 +1,22 @@
 import React from 'react';
-import LeaveGameButton from '../LeaveGameButton/LeaveGameButton';
-import './Player.css';
-import { PlayerProps } from '../../types/player-props';
+import './Player.module.css';
+import styles from './Player.module.css';
 
-const Player: React.FC<PlayerProps> = ({ playerName }) => {
+interface Player {
+    player: {
+        name: string;
+        symbol: string;
+    };
+}
+
+const Player: React.FC<Player> = ({ player }) => {
+    const playerBackgroundColor = player.symbol === 'X' ? '#31c4be' : '#f2b237';
+
     return (
-        <div className="player">
-            <div className="player-name">{playerName}</div>
+        <div className={styles.player}>
+            <p className={styles.label} style={{ backgroundColor: playerBackgroundColor }}>
+                {player.name} - {player.symbol}
+            </p>
         </div>
     );
 };
