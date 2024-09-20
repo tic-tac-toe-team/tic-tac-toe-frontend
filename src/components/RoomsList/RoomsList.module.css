@@ -1,0 +1,52 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    min-height: 100vh;
+    padding: 50px;
+}
+
+.label {
+    display: flex;
+    justify-content: center;
+    color: #31C3BD;
+    font-size: 60px;
+    font-weight: bold;
+    gap: 20px;
+    text-transform: capitalize;
+}
+
+.create-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 80%;
+}
+
+.symbol {
+    color: #f2b237;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+
+    font-weight: bold;
+
+    background-color: rgba(31,53,64,255);
+    border: none;
+    border-radius: 15px;
+
+    cursor: pointer;
+}
