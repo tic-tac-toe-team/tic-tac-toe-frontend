@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from './Cell.module.css';
 
-const xColor = '#31C3BD';
-const oColor = '#E89B30';
-const defaultColor = '#ffffff';
-
 interface CellProps {
     value: 'X' | 'O' | '';
     onClick: () => void;
 }
+
 const Cell: React.FC<CellProps> = ({ value, onClick }) => {
+    const xColor = '#31c4be';
+    const oColor = '#E89B30';
+    const defaultColor = '#a8bec9';
+
     const cellColor = value === 'X' ? xColor : value === 'O' ? oColor : defaultColor;
 
     return (
