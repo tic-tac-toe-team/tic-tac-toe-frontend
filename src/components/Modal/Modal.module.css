@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,17 +12,18 @@
 }
 
 .modalContent {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
-    background-color: var(--white);
+    background-color: var(--dark-blue-lighter);
+    color: var(--light-blue);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
-    padding: 40px;
+    gap: 40px;
+    padding: 50px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+    box-shadow: var(--box-shadow-container);
     width: 600px;
 }
 
@@ -32,16 +33,25 @@
 }
 
 .modalBtn {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     padding: 15px 25px;
-    background-color: var(--blue);
-    color: var(--white);
+    background-color: var(--turquoise);
+    color: var(--dark-blue);
+    box-shadow: var(--box-shadow-button);
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 
 .modalBtn:hover {
-    background-color: var(--blue-darker);
+    background-color: var(--turquoise-hovered);
+}
+
+.quitBtn {
+    background-color: var(--light-blue);
+}
+
+.quitBtn:hover {
+    background-color: var(--light-blue-hovered);
 }

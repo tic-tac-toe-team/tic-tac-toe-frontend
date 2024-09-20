@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: var(--dark-blue);
 }
 
 .authButtons {
@@ -16,44 +17,49 @@
 }
 
 .authButton {
-    padding: 10px 20px;
-    font-size: 20px;
+    padding: 15px 20px;
+    font-size: 24px;
     font-weight: bold;
-    color: white;
-    background-color: var(--blue);
+    color: var(--dark-blue);
+    background-color: var(--turquoise);
+    box-shadow: 4px 6px rgba(0, 0, 0, 0.7);
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 
 .authButton:hover {
-    background-color: var(--blue-darker);
+    background-color: var(--turquoise-hovered);
 }
 
 .startButton {
-    padding: 40px 100px;
+    padding: 50px 120px;
     font-size: 36px;
     font-weight: bold;
-    background-color: var(--green);
-    color: var(--white);
+    background-color: var(--orange);
+    color: var(--dark-blue);
+    box-shadow: 5px 10px rgba(0, 0, 0, 0.7);
     border: none;
     border-radius: 20px;
     cursor: pointer;
 }
 
 .startButton:hover {
-    background-color: var(--green-darker);
+    background-color: var(--orange-hovered);
 }
 
 .authText {
+    font-weight: bold;
+    color: var(--light-blue);
     font-size: 24px;
 }
 
 .authTextLink {
-    color: var(--blue);
+    color: var(--turquoise);
     text-decoration: none;
 }
 
 .authTextLink:hover {
+    color: var(--turquoise-hovered);
     text-decoration: underline;
 }

@@ -3,27 +3,28 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-color: var(--dark-blue);
 }
 
-.registerContainer {
+.formContainer {
     display: flex;
     flex-direction: column;
     gap: 25px;
     width: 600px;
-    padding: 25px;
-    border: 1px solid #ddd;
+    padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+    box-shadow: var(--box-shadow-container);
+    background-color: var(--dark-blue-lighter);
 }
 
-.registerHeader {
-    font-size: 30px;
+.formHeader {
+    color: var(--turquoise);
+    font-size: 36px;
     font-weight: bold;
     text-align: center;
 }
 
-.registerForm {
+.form {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -36,20 +37,23 @@ body {
 }
 
 .formLabel {
-    font-size: 20px;
+    color: var(--light-blue);
+    font-size: 24px;
     font-weight: bold;
 }
 
 .formInput {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
+    background-color: var(--dark-blue);
     border-radius: 5px;
 }
 
 .formSubmitBtn {
-    padding: 10px;
-    background-color: var(--blue);
-    color: var(--white);
+    padding: 15px;
+    background-color: var(--orange);
+    color: var(--dark-blue);
+    box-shadow: var(--box-shadow-button);
     font-size: 24px;
     font-weight: bold;
     border: none;
@@ -58,18 +62,21 @@ body {
 }
 
 .formSubmitBtn:hover {
-    background-color: var(--blue-darker);
+    background-color: var(--orange-hovered);
 }
 
 .authText {
-    font-size: 20px;
+    font-weight: bold;
+    color: var(--light-blue);
+    font-size: 24px;
 }
 
 .authTextLink {
-    color: var(--blue);
+    color: var(--turquoise);
     text-decoration: none;
 }
 
 .authTextLink:hover {
+    color: var(--turquoise-hovered);
     text-decoration: underline;
 }

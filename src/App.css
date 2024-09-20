@@ -1,11 +1,17 @@
 @import 'css-reset.css';
 
 :root {
-    --white: #fff;
-    --green: #4CAF50;
-    --green-darker: #45a049;
-    --blue: #007bff;
-    --blue-darker: #0056b3;
+    --orange: #E89B30;
+    --orange-hovered: #be7f26;
+    --dark-blue: #1B263B;
+    --dark-blue-lighter: #273756;
+    --light-blue: #a8bec9;
+    --light-blue-hovered: #8597a1;
+    --turquoise: #31c4be;
+    --turquoise-hovered: #24938e;
+
+    --box-shadow-button: 4px 6px rgba(0, 0, 0, 0.7);
+    --box-shadow-container: 5px 10px rgba(0, 0, 0, 0.7);
 }
 
 body, html {

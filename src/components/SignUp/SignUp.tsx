@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "../../App.css";
-import styles from "./SignUp.module.css";
+import AuthForm from "../AuthForm/AuthForm";
 
 const SignUp: React.FC = () => {
     const [username, setUsername] = useState<string>("");
@@ -16,50 +15,40 @@ const SignUp: React.FC = () => {
         console.log("Registration info: Username:", username, "Password:", password);
     };
 
+    const fields = [
+        {
+            id: "username",
+            label: "Username:",
+            type: "text",
+            value: username,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
+        },
+        {
+            id: "password",
+            label: "Password:",
+            type: "password",
+            value: password,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
+        },
+        {
+            id: "confirmPassword",
+            label: "Confirm Password:",
+            type: "password",
+            value: confirmPassword,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value),
+        },
+    ];
+
     return (
-        <div className={styles.registerContainer}>
-            <h2 className={styles.registerHeader}>Register</h2>
-            <form className={styles.registerForm} onSubmit={handleSubmit}>
-                <div className={styles.formGroup}>
-                    <label className={styles.formLabel} htmlFor="username">Username:</label>
-                    <input
-                        className={styles.formInput}
-                        id="username"
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.formGroup}>
-                    <label className={styles.formLabel} htmlFor="password">Password:</label>
-                    <input
-                        className={styles.formInput}
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={styles.formGroup}>
-                    <label className={styles.formLabel} htmlFor="confirmPassword">Confirm Password:</label>
-                    <input
-                        className={styles.formInput}
-                        id="confirmPassword"
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button className={styles.formSubmitBtn} type="submit">Register</button>
-            </form>
-            <p className={styles.authText}>
-                Have already registered?
-                <a href="/" className={styles.authTextLink}> Login</a>
-            </p>
-        </div>
+        <AuthForm
+            title="Registration"
+            fields={fields}
+            submitButtonText="Register"
+            onSubmit={handleSubmit}
+            footerText="Have already registered? "
+            footerLinkText="Login"
+            footerLinkHref="/login"
+        />
     );
 };
 
