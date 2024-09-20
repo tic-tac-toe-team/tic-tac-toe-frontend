@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../App.css"
-import "./Login.css"
+import styles from "./Login.module.css"
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>("");
@@ -12,13 +12,13 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="login-container">
-            <h2 className="login-header">Login</h2>
-            <form className="login-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="username">Username:</label>
+        <div className={styles.loginContainer}>
+            <h2 className={styles.loginHeader}>Login</h2>
+            <form className={styles.loginForm} onSubmit={handleSubmit}>
+                <div className={styles.formGroup}>
+                    <label className={styles.formLabel} htmlFor="username">Username:</label>
                     <input
-                        className="form-input"
+                        className={styles.formInput}
                         id="username"
                         type="text"
                         value={username}
@@ -26,10 +26,10 @@ const Login: React.FC = () => {
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="password">Password:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.formLabel} htmlFor="password">Password:</label>
                     <input
-                        className="form-input"
+                        className={styles.formInput}
                         id="password"
                         type="password"
                         value={password}
@@ -37,11 +37,11 @@ const Login: React.FC = () => {
                         required
                     />
                 </div>
-                <button className="form-submit-btn" type="submit">Login</button>
+                <button className={styles.formSubmitBtn} type="submit">Login</button>
             </form>
-            <p className="auth-text">
-                Don`t have an account?
-                <a href="/" className="auth-text-link"> Register now</a>
+            <p className={styles.authText}>
+                Don’t have an account?
+                <a href="/" className={styles.authTextLink}> Register now</a>
             </p>
         </div>
     );

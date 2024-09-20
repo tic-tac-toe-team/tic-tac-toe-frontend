@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../../App.css"
-import "./SignUp.css"
+import "../../App.css";
+import styles from "./SignUp.module.css";
 
 const SignUp: React.FC = () => {
     const [username, setUsername] = useState<string>("");
@@ -17,13 +17,13 @@ const SignUp: React.FC = () => {
     };
 
     return (
-        <div className="register-container">
-            <h2 className="register-header">Register</h2>
-            <form className="register-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="username">Username:</label>
+        <div className={styles.registerContainer}>
+            <h2 className={styles.registerHeader}>Register</h2>
+            <form className={styles.registerForm} onSubmit={handleSubmit}>
+                <div className={styles.formGroup}>
+                    <label className={styles.formLabel} htmlFor="username">Username:</label>
                     <input
-                        className="form-input"
+                        className={styles.formInput}
                         id="username"
                         type="text"
                         value={username}
@@ -31,10 +31,10 @@ const SignUp: React.FC = () => {
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="password">Password:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.formLabel} htmlFor="password">Password:</label>
                     <input
-                        className="form-input"
+                        className={styles.formInput}
                         id="password"
                         type="password"
                         value={password}
@@ -42,10 +42,10 @@ const SignUp: React.FC = () => {
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label className="form-label" htmlFor="confirmPassword">Confirm Password:</label>
+                <div className={styles.formGroup}>
+                    <label className={styles.formLabel} htmlFor="confirmPassword">Confirm Password:</label>
                     <input
-                        className="form-input"
+                        className={styles.formInput}
                         id="confirmPassword"
                         type="password"
                         value={confirmPassword}
@@ -53,11 +53,11 @@ const SignUp: React.FC = () => {
                         required
                     />
                 </div>
-                <button className="form-submit-btn" type="submit">Register</button>
+                <button className={styles.formSubmitBtn} type="submit">Register</button>
             </form>
-            <p className="auth-text">
+            <p className={styles.authText}>
                 Have already registered?
-                <a href="/" className="auth-text-link"> Login</a>
+                <a href="/" className={styles.authTextLink}> Login</a>
             </p>
         </div>
     );

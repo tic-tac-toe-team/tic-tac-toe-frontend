@@ -5,7 +5,7 @@ body {
     min-height: 100vh;
 }
 
-.login-container {
+.registerContainer {
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -17,37 +17,36 @@ body {
     background-color: #f9f9f9;
 }
 
-.login-header {
+.registerHeader {
     font-size: 30px;
     font-weight: bold;
     text-align: center;
 }
 
-.login-form, .form-group {
+.registerForm {
     display: flex;
     flex-direction: column;
-}
-
-.form-group {
-    gap: 10px;
-}
-
-.login-form {
     gap: 20px;
 }
 
-.form-label {
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formLabel {
     font-size: 20px;
     font-weight: bold;
 }
 
-.form-input {
+.formInput {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.form-submit-btn {
+.formSubmitBtn {
     padding: 10px;
     background-color: var(--blue);
     color: var(--white);
@@ -58,19 +57,19 @@ body {
     cursor: pointer;
 }
 
-.form-submit-btn:hover {
+.formSubmitBtn:hover {
     background-color: var(--blue-darker);
 }
 
-.auth-text {
+.authText {
     font-size: 20px;
 }
 
-.auth-text-link {
+.authTextLink {
     color: var(--blue);
     text-decoration: none;
 }
 
-.auth-text-link:hover {
+.authTextLink:hover {
     text-decoration: underline;
 }

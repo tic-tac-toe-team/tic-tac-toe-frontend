@@ -1,4 +1,4 @@
-.start-page__container {
+.startPageContainer {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -7,7 +7,7 @@
     height: 100vh;
 }
 
-.auth__buttons {
+.authButtons {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -15,7 +15,7 @@
     gap: 20px;
 }
 
-.auth__button {
+.authButton {
     padding: 10px 20px;
     font-size: 20px;
     font-weight: bold;
@@ -26,11 +26,11 @@
     cursor: pointer;
 }
 
-.auth__button:hover {
+.authButton:hover {
     background-color: var(--blue-darker);
 }
 
-.start__button {
+.startButton {
     padding: 40px 100px;
     font-size: 36px;
     font-weight: bold;
@@ -41,19 +41,19 @@
     cursor: pointer;
 }
 
-.start__button:hover {
+.startButton:hover {
     background-color: var(--green-darker);
 }
 
-.auth__text {
+.authText {
     font-size: 24px;
 }
 
-.auth__text_link {
+.authTextLink {
     color: var(--blue);
     text-decoration: none;
 }
 
-.auth__text_link:hover {
+.authTextLink:hover {
     text-decoration: underline;
 }

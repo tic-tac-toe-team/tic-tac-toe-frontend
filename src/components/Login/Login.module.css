@@ -1,0 +1,75 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 600px;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.loginHeader {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formLabel {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.formInput {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formSubmitBtn {
+    padding: 10px;
+    background-color: var(--blue);
+    color: var(--white);
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.formSubmitBtn:hover {
+    background-color: var(--blue-darker);
+}
+
+.authText {
+    font-size: 20px;
+}
+
+.authTextLink {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+.authTextLink:hover {
+    text-decoration: underline;
+}
