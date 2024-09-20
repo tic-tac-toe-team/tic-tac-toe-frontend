@@ -17,6 +17,7 @@
 }
 
 .authButton {
+    text-decoration: none;
     padding: 15px 20px;
     font-size: 24px;
     font-weight: bold;
@@ -33,6 +34,7 @@
 }
 
 .startButton {
+    text-decoration: none;
     padding: 50px 120px;
     font-size: 36px;
     font-weight: bold;
