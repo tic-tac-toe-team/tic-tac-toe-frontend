@@ -1,8 +1,13 @@
 import React from 'react';
-import './LeaveGameButton.css'
+import './LeaveGameButton.module.css'
+import styles from './LeaveGameButton.module.css'
 
-const LeaveGameButton = () => {
-    return <button className="leave-game-button">Leave the game</button>;
+const LeaveGameButton: React.FC = () => {
+    return (
+        <div className={styles.container}>
+            <button className={styles.button}>Leave the game</button>
+        </div>
+    );
 }
 
 export default LeaveGameButton;
