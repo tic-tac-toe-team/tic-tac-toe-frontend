@@ -5,10 +5,11 @@
 
 .label {
     padding: 15px;
-    color: rgba(25,42,50,255);
+    color: var(--dark-blue);
     font-size: 24px;
     font-weight: bold;
-    background-color: #a8bec9;
+    background-color: var(--light-blue);
+    box-shadow: var(--box-shadow-button);
     border-radius: 10px;
     text-transform: uppercase;
 }

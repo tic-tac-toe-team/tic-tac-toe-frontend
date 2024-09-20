@@ -12,9 +12,13 @@
     font-weight: bold;
     color: #192a32;
 
-    background-color: #f0b238;
+    background-color: var(--orange);
     border: none;
     border-radius: 5px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--box-shadow-button);
     cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--orange-hovered);
 }
