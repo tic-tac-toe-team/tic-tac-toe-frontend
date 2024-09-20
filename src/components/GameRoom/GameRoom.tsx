@@ -3,7 +3,7 @@ import styles from './GameRoom.module.css';
 import {Link} from "react-router-dom";
 
 interface GameRoomProps {
-    id: number;
+    id?: number;
     playersCount: number;
 }
 

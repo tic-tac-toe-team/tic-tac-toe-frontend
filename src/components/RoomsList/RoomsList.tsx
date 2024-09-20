@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import GameRoom from '../GameRoom/GameRoom';
 import CreateGameButton from '../CreateGameButton/CreateGameButton';
 import styles from './RoomsList.module.css';
-import { createGame } from '../../api/game-api'; // Імпортуємо функцію для створення гри
+import { createGame } from '../../api/game-api';
+import { GameResponseDto } from "../../types/dtos/game-response-dto";
+import { JoinPlayerDto } from "../../types/dtos/join-player-dto";
 
 const RoomList: React.FC = () => {
+    const [game, setGame] = useState<GameResponseDto | null>(null);
+
     const rooms = [
         { id: 1, playersCount: 2 },
         { id: 2, playersCount: 1 },
@@ -18,8 +22,13 @@ const RoomList: React.FC = () => {
 
     const handleCreateGame = async () => {
         try {
-            const newGame = await createGame(3);
-            console.log('Game created:', newGame);
+            const dto: JoinPlayerDto = {
+                playerId: 3,
+            };
+
+            const response: GameResponseDto = await createGame(dto);
+            setGame(response);
+            console.log('Game created:', response);
         } catch (error) {
             console.error('Failed to create game', error);
         }
@@ -34,8 +43,8 @@ const RoomList: React.FC = () => {
             <div className={styles.container}>
                 {rooms.map((room) => (
                     <GameRoom
-                        key={room.id}
-                        id={room.id}
+                        key={game?.gameId}
+                        id={game?.gameId}
                         playersCount={room.playersCount}
                     />
                 ))}

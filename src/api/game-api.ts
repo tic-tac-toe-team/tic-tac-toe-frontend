@@ -1,4 +1,6 @@
 import axiosClient from './axios-client';
+import { JoinPlayerDto } from "../types/dtos/join-player-dto";
+import { GameResponseDto } from "../types/dtos/game-response-dto";
 
 export const getAllGames = async () => {
     const client = axiosClient();
@@ -7,9 +9,9 @@ export const getAllGames = async () => {
     return response.data;
 };
 
-export const createGame = async (playerId: number) => {
+export const createGame = async (dto: JoinPlayerDto): Promise<GameResponseDto> => {
     const client = axiosClient();
-    const response = await client.post('/games', { playerId });
+    const response = await client.post<GameResponseDto>('/games', dto);
 
     return response.data;
 };
