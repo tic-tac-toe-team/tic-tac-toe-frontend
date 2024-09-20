@@ -1,6 +1,10 @@
 import React from 'react';
-import { InfoProps } from '../../types/info-props';
 import styles from './Info.module.css';
+
+interface InfoProps {
+    currentPlayer: string;
+}
+
 const Info: React.FC<InfoProps> = ({ currentPlayer }) => {
     return (
         <div className={styles.info}>

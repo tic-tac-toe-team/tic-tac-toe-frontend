@@ -1,8 +1,12 @@
 import React from 'react';
-import { RoomProps } from '../../types/room-props';
 import styles from './GameRoom.module.css';
 
-const GameRoom: React.FC<RoomProps> = ({ id, playersCount }) => (
+interface GameRoomProps {
+    id: number;
+    playersCount: number;
+}
+
+const GameRoom: React.FC<GameRoomProps> = ({ id, playersCount }) => (
     <button className={styles.button}>
         <p>Room {id}</p>
         <p>Players: {playersCount}</p>
