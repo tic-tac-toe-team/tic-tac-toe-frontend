@@ -2,6 +2,7 @@ import React from 'react';
 import GameRoom from '../GameRoom/GameRoom';
 import CreateGameButton from '../CreateGameButton/CreateGameButton';
 import styles from './RoomsList.module.css';
+import { createGame } from '../../api/game-api'; // Імпортуємо функцію для створення гри
 
 const RoomList: React.FC = () => {
     const rooms = [
@@ -14,6 +15,15 @@ const RoomList: React.FC = () => {
         { id: 7, playersCount: 1 },
         { id: 8, playersCount: 1 },
     ];
+
+    const handleCreateGame = async () => {
+        try {
+            const newGame = await createGame(3);
+            console.log('Game created:', newGame);
+        } catch (error) {
+            console.error('Failed to create game', error);
+        }
+    };
 
     return (
         <div className={styles.list}>
@@ -31,7 +41,7 @@ const RoomList: React.FC = () => {
                 ))}
             </div>
             <div className={styles['create-button']}>
-                <CreateGameButton/>
+                <CreateGameButton onClick={handleCreateGame}/>
             </div>
         </div>
     );

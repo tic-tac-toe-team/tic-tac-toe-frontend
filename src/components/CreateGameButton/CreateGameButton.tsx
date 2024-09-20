@@ -1,9 +1,13 @@
 import React from 'react';
 import styles from './CreateGameButton.module.css';
 
-const CreateGameButton: React.FC = () => {
+interface CreateGameButtonProps {
+    onClick: () => void;
+}
+
+const CreateGameButton: React.FC<CreateGameButtonProps> = ({ onClick }) => {
     return (
-        <button className={styles.button}>+</button>
+        <button className={styles.button} onClick={onClick}>+</button>
     );
 }
 
