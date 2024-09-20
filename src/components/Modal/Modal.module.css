@@ -1,0 +1,57 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: var(--dark-blue-lighter);
+    color: var(--light-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow-container);
+    width: 600px;
+}
+
+.modalButtons {
+    display: flex;
+    gap: 50px;
+}
+
+.modalBtn {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 25px;
+    background-color: var(--turquoise);
+    color: var(--dark-blue);
+    box-shadow: var(--box-shadow-button);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.modalBtn:hover {
+    background-color: var(--turquoise-hovered);
+}
+
+.quitBtn {
+    background-color: var(--light-blue);
+}
+
+.quitBtn:hover {
+    background-color: var(--light-blue-hovered);
+}
