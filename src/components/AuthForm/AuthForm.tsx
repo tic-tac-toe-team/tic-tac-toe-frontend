@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./AuthForm.module.css";
 
 interface Field {
@@ -46,9 +47,9 @@ const AuthForm: React.FC<AuthFormProps> = ({title, fields, submitButtonText, onS
             </form>
             <p className={styles.authText}>
                 {footerText}
-                <a href={footerLinkHref} className={styles.authTextLink}>
+                <Link to={footerLinkHref} className={styles.authTextLink}>
                     {footerLinkText}
-                </a>
+                </Link>
             </p>
         </div>
     );

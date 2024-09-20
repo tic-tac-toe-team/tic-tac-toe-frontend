@@ -1,18 +1,30 @@
 import React from "react";
 import styles from "./StartPage.module.css";
+import {Link} from "react-router-dom";
 
 const StartPage = () => {
     return (
         <div className={styles.startPageContainer}>
             <div className={styles.authButtons}>
-                <button className={`${styles.authButton} ${styles.authButtonSignUp}`}>Sign up</button>
-                <button className={`${styles.authButton} ${styles.authButtonLogin}`}>Login</button>
+                <Link to="/signup" className={`${styles.authButton} ${styles.authButtonSignUp}`}>
+                    Sign up
+                </Link>
+                <Link to="/login" className={`${styles.authButton} ${styles.authButtonLogin}`}>
+                    Login
+                </Link>
             </div>
 
-            <button className={styles.startButton}>Start Game</button>
+            <Link to="/rooms" className={styles.startButton}>Start Game</Link>
             <p className={styles.authText}>
-                <a href="/" className={styles.authTextLink}>Sign up</a> or
-                <a href="/" className={styles.authTextLink}> Login</a> if you have already registered
+                <Link to="/signup" className={styles.authTextLink}>
+                    Sign up
+                </Link>{" "}
+                or
+                <Link to="/login" className={styles.authTextLink}>
+                    {" "}
+                    Login
+                </Link>{" "}
+                if you have already registered
             </p>
         </div>
     );

@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import AuthForm from "../AuthForm/AuthForm";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("Login info: Username:", username, "Password:", password);
+        navigate("/dashboard");
     };
 
     const fields = [

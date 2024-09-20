@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import AuthForm from "../AuthForm/AuthForm";
+import {useNavigate} from "react-router-dom";
 
 const SignUp: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         if (password !== confirmPassword) {
             alert("Passwords do not match!");
+
             return;
         }
+
         console.log("Registration info: Username:", username, "Password:", password);
+        navigate("/login");
     };
 
     const fields = [
