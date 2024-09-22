@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosInstance, AxiosResponse} from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 const axiosClient = (token: string | null = null): AxiosInstance => {
     const headers = token
@@ -17,7 +17,8 @@ const axiosClient = (token: string | null = null): AxiosInstance => {
     });
 
     client.interceptors.request.use((config: any) => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFubmEiLCJzdWIiOjMsImlhdCI6MTcyNjgzOTY0NCwiZXhwIjoxNzI2OTI2MDQ0fQ.2pjjq5kOPg9KcClwx9hgWEvp8RDDUoZPS4ri1C8Iwek';
+        const token = localStorage.getItem("ACCESS_TOKEN");
+
         config.headers = config.headers || {};
 
         if (token) {
