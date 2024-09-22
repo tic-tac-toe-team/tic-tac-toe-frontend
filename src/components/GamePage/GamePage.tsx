@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
 import { getGameById, leaveGame, makeMove } from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
-import {LeaveGameDto} from "../../types/dtos/leave-game-dto";
+import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
