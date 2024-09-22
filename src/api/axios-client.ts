@@ -19,9 +19,11 @@ const axiosClient = (token: string | null = null): AxiosInstance => {
     client.interceptors.request.use((config: any) => {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFubmEiLCJzdWIiOjMsImlhdCI6MTcyNjgzOTY0NCwiZXhwIjoxNzI2OTI2MDQ0fQ.2pjjq5kOPg9KcClwx9hgWEvp8RDDUoZPS4ri1C8Iwek';
         config.headers = config.headers || {};
+
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
         return config;
     });
 
@@ -29,6 +31,7 @@ const axiosClient = (token: string | null = null): AxiosInstance => {
         (response: AxiosResponse) => response,
         (error: AxiosError) => {
             const { response } = error;
+
             if (response?.status === 401) {
                 localStorage.removeItem("ACCESS_TOKEN");
             }
