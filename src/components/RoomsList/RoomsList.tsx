@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const RoomList: React.FC = () => {
     const [games, setGames] = useState<GameResponseDto[]>([]);
     const navigate = useNavigate();
+    const storedPlayerId = Number(localStorage.getItem('playerId'));
 
     useEffect(() => {
         fetchGames();
@@ -26,23 +27,14 @@ const RoomList: React.FC = () => {
 
     const handleCreateGame = async () => {
         try {
-            const dto: JoinPlayerDto = { playerId: 2 };
+            const dto: JoinPlayerDto = { playerId: storedPlayerId};
             const response = await createGame(dto);
 
-            // const player = response.players.find(player => player.playerId === dto.playerId);
-
-            // if (player) {
-            //     localStorage.setItem('playerId', player.playerId.toString());
-            //     localStorage.setItem('playerName', player.name);
-            // }
-
+            localStorage.setItem('playerId', '1');
+            // setGames(prevGames => [...prevGames, response]);
             await fetchGames();
 
-            // setGames(prevGames => [...prevGames, response]);
-
-            const storedPlayerId = localStorage.getItem('playerId');
-
-            if (storedPlayerId && parseInt(storedPlayerId) === dto.playerId) {
+            if (storedPlayerId && Number(storedPlayerId) === dto.playerId) {
                 navigate(`/game/${response.gameId}`);
             }
 
@@ -52,7 +44,7 @@ const RoomList: React.FC = () => {
     };
 
     const handleJoinGame = async (gameId: string) => {
-        const dto: JoinPlayerDto = { playerId: 2 };
+        const dto: JoinPlayerDto = { playerId: storedPlayerId};
         const response = await joinGame(gameId, dto);
 
         if (response) {

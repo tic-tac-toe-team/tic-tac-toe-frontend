@@ -7,8 +7,6 @@ import styles from './GamePage.module.css';
 import { useParams } from 'react-router-dom';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
 import { getGameById, makeMove } from '../../api/game-api';
-import { CellType } from '../../types/cell-type';
-import { PlayerType } from '../../types/player-type';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 
 const GamePage: React.FC = () => {
@@ -16,13 +14,15 @@ const GamePage: React.FC = () => {
     const [game, setGame] = useState<GameResponseDto | null>(null);
     // const [cells, setCells] = useState<CellType[]>([]);
     // const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
+    // const [players, setPlayers] = useState<PlayerType[]>([]);
     const cells = game?.cells || [];
     const players = game?.players || [];
     const currentPlayer = game?.players.find(player => player.isCurrent);
+    const storedPlayerId = Number(localStorage.getItem('playerId'));
 
     useEffect(() => {
         fetchGame();
-    }, []);
+    }, [players]);
 
     const fetchGame = async () => {
         try {
@@ -30,11 +30,8 @@ const GamePage: React.FC = () => {
                 const response: GameResponseDto = await getGameById(gameId);
                 setGame(response);
                 // setCells(response.cells);
-
-
+                // setPlayers(response.players);
                 // setCurrentPlayer(currentPlayer || null);
-
-                console.log(response);
             }
         } catch (error) {
             console.error('Failed to fetch game', error);
@@ -43,11 +40,15 @@ const GamePage: React.FC = () => {
 
     const handleCellClick = async (index: number) => {
         try {
-            if (gameId) {
-                const moveDto: MakeMoveDto = { position: index };
-                await makeMove(gameId, moveDto);
+            if (currentPlayer?.playerId !== storedPlayerId) {
+                alert('It is not your turn to make a move.');
+                return;
+            }
 
-                fetchGame();
+            if (gameId) {
+                const moveDto: MakeMoveDto = { position: index, playerId: storedPlayerId};
+                const response = await makeMove(gameId, moveDto);
+                setGame(response);
             }
         } catch (error) {
             console.error('Failed to make move', error);
