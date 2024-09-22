@@ -14,10 +14,11 @@ import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
     const [game, setGame] = useState<GameResponseDto | null>(null);
-    const [cells, setCells] = useState<CellType[]>([]);
-    const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
-
+    // const [cells, setCells] = useState<CellType[]>([]);
+    // const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
+    const cells = game?.cells || [];
     const players = game?.players || [];
+    const currentPlayer = game?.players.find(player => player.isCurrent);
 
     useEffect(() => {
         fetchGame();
@@ -28,10 +29,10 @@ const GamePage: React.FC = () => {
             if (gameId) {
                 const response: GameResponseDto = await getGameById(gameId);
                 setGame(response);
-                setCells(response.cells);
+                // setCells(response.cells);
 
-                const currentPlayer = response.players.find(player => player.isCurrent);
-                setCurrentPlayer(currentPlayer || null);
+
+                // setCurrentPlayer(currentPlayer || null);
 
                 console.log(response);
             }
