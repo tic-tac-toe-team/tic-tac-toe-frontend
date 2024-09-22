@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Info.module.css';
 
 interface InfoProps {
-    currentPlayer: string;
+    currentPlayer?: string;
 }
 
 const Info: React.FC<InfoProps> = ({ currentPlayer }) => {
