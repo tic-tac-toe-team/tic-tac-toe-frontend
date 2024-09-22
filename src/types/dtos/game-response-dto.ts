@@ -1,11 +1,12 @@
 export interface Cell {
     id: number;
-    value: string;
+    symbol: string;
 }
 
 export interface Player {
     playerId: number;
-    name: string;
+    isCurrent: boolean;
+    symbol: string;
 }
 
 export interface GameResponseDto {
