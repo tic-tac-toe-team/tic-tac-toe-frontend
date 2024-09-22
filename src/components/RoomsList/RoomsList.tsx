@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import GameRoom from '../GameRoom/GameRoom';
 import CreateGameButton from '../CreateGameButton/CreateGameButton';
 import styles from './RoomsList.module.css';
-import { createGame, getAllGames } from '../../api/game-api';
+import { createGame, getAllGames, joinGame } from '../../api/game-api';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
 import { JoinPlayerDto } from '../../types/dtos/join-player-dto';
 import { useNavigate } from 'react-router-dom';
@@ -51,6 +51,17 @@ const RoomList: React.FC = () => {
         }
     };
 
+    const handleJoinGame = async (gameId: string) => {
+        const dto: JoinPlayerDto = { playerId: 2 };
+        const response = await joinGame(gameId, dto);
+
+        if (response) {
+            navigate(`/game/${response.gameId}`);
+        }
+
+        console.log(response);
+    }
+
     return (
         <div className={styles.list}>
             <div className={styles.label}>
@@ -61,7 +72,8 @@ const RoomList: React.FC = () => {
                 {games.map((game) => (
                     <GameRoom
                         key={game.gameId}
-                        id={game.gameId}
+                        onClick={handleJoinGame}
+                        id={game.gameId.toString()}
                         playersCount={game.players.length}
                     />
                 ))}

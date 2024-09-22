@@ -23,6 +23,12 @@ export const createGame = async (dto: JoinPlayerDto): Promise<GameResponseDto> =
     return response.data;
 };
 
+export const joinGame = async (gameId: string ,dto: JoinPlayerDto): Promise<GameResponseDto> => {
+    const response = await client.post<GameResponseDto>(`/games/${gameId}/join`, dto);
+
+    return response.data;
+};
+
 export const makeMove = async (gameId: string, dto: MakeMoveDto): Promise<GameResponseDto> => {
     const response = await client.post(`/games/${gameId}/move`, dto);
 
