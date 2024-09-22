@@ -4,14 +4,16 @@ import Info from '../Info/Info';
 import Player from "../Player/Player";
 import LeaveGameButton from "../LeaveGameButton/LeaveGameButton";
 import styles from './GamePage.module.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
-import { getGameById, makeMove } from '../../api/game-api';
+import { getGameById, leaveGame, makeMove } from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
+import {LeaveGameDto} from "../../types/dtos/leave-game-dto";
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
     const [game, setGame] = useState<GameResponseDto | null>(null);
+    const navigate = useNavigate();
     // const [cells, setCells] = useState<CellType[]>([]);
     // const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
     // const [players, setPlayers] = useState<PlayerType[]>([]);
@@ -38,7 +40,7 @@ const GamePage: React.FC = () => {
         }
     }
 
-    const handleCellClick = async (index: number) => {
+    const handleMakeMove = async (index: number) => {
         try {
             if (currentPlayer?.playerId !== storedPlayerId) {
                 alert('It is not your turn to make a move.');
@@ -55,6 +57,18 @@ const GamePage: React.FC = () => {
         }
     };
 
+    const handleLeaveGame = async () => {
+        try {
+            if (gameId) {
+                const leaveGameDto: LeaveGameDto = {playerId: storedPlayerId};
+                await leaveGame(gameId, leaveGameDto);
+                navigate(`/rooms`);
+            }
+        } catch (error) {
+            console.error('Failed to leave game', error);
+        }
+    }
+
     return (
         <div className={styles.game}>
             <div className={styles.players}>
@@ -68,10 +82,10 @@ const GamePage: React.FC = () => {
             </div>
             <div className={styles.board}>
                 <Info currentPlayer={currentPlayer?.symbol} />
-                <Board cells={cells} onCellClick={handleCellClick} />
+                <Board cells={cells} onClick={handleMakeMove} />
             </div>
             <div className={styles.container}>
-                <LeaveGameButton />
+                <LeaveGameButton onClick={handleLeaveGame}/>
             </div>
         </div>
     );

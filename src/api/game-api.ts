@@ -2,6 +2,7 @@ import axiosClient from './axios-client';
 import { JoinPlayerDto } from '../types/dtos/join-player-dto';
 import { GameResponseDto } from '../types/dtos/game-response-dto';
 import { MakeMoveDto } from '../types/dtos/make-move-dto';
+import { LeaveGameDto } from '../types/dtos/leave-game-dto';
 
 const client = axiosClient();
 
@@ -33,4 +34,8 @@ export const makeMove = async (gameId: string, dto: MakeMoveDto): Promise<GameRe
     const response = await client.post(`/games/${gameId}/move`, dto);
 
     return response.data;
+};
+
+export const leaveGame = async (gameId: string, dto: LeaveGameDto): Promise<void> => {
+    return await client.post(`/games/${gameId}/leave`, dto);
 };

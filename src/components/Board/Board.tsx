@@ -5,17 +5,17 @@ import { CellType } from '../../types/cell-type';
 
 interface BoardProps {
     cells: Array<CellType>;
-    onCellClick: (index: number) => void;
+    onClick: (index: number) => void;
 }
 
-const Board: React.FC<BoardProps> = ({ cells, onCellClick }) => {
+const Board: React.FC<BoardProps> = ({ cells, onClick }) => {
     return (
         <div className={styles.board}>
             {cells && cells.map((cell, index) => (
                 <Cell
                     key={cell.id}
                     symbol={cell.symbol}
-                    onClick={() => onCellClick(index)}
+                    onClick={() => onClick(index)}
                 />
             ))}
         </div>

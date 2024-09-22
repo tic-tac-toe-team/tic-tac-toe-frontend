@@ -12,13 +12,13 @@ const Cell: React.FC<CellProps> = ({ symbol, onClick }) => {
     const oColor = '#E89B30';
     const defaultColor = '#a8bec9';
 
-    const cellColor = symbol === SymbolEnum.X ? xColor : symbol === SymbolEnum.O ? oColor : defaultColor;
+    const valueColor = symbol === SymbolEnum.X ? xColor : symbol === SymbolEnum.O ? oColor : defaultColor;
 
     return (
         <button
             className={styles.cell}
             onClick={onClick}
-            style={{ color: cellColor }}
+            style={{ color: valueColor }}
         >
             {symbol}
         </button>
