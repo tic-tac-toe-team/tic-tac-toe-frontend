@@ -6,6 +6,7 @@ import SignUp from './components/SignUp/SignUp';
 import StartPage from './components/StartPage/StartPage';
 import RoomList from "./components/RoomsList/RoomsList";
 import GamePage from "./components/GamePage/GamePage";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 const App: React.FC = () => {
   return (
@@ -13,8 +14,8 @@ const App: React.FC = () => {
           <Route path="/" element={<StartPage/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<SignUp/>} />
-          <Route path="/rooms" element={<RoomList/>} />
-          <Route path="/game/:gameId" element={<GamePage/>} />
+          <Route path="/rooms" element={<ProtectedRoute element={<RoomList />} />} />
+          <Route path="/game/:gameId" element={<ProtectedRoute element={<GamePage />} />} />
           <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
   );

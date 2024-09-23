@@ -18,10 +18,11 @@ interface AuthFormProps {
     footerText: string;
     footerLinkText: string;
     footerLinkHref: string;
+    error?: string;
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({title, fields, submitButtonText, onSubmit,
-                                               footerText, footerLinkText, footerLinkHref,}) => {
+const AuthForm: React.FC<AuthFormProps> = ({title, fields, submitButtonText, onSubmit, footerText,
+                                               footerLinkText, footerLinkHref, error,}) => {
     return (
         <div className={styles.formContainer}>
             <h2 className={styles.formHeader}>{title}</h2>
@@ -51,6 +52,7 @@ const AuthForm: React.FC<AuthFormProps> = ({title, fields, submitButtonText, onS
                     {footerLinkText}
                 </Link>
             </p>
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };

@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import AuthForm from "../AuthForm/AuthForm";
 import { useNavigate } from "react-router-dom";
+import {login} from "../../api/auth-api";
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Login info: Username:", username, "Password:", password);
-        navigate("/dashboard");
+        try {
+            const response = await login({ username, password });
+            console.log("Logging in successful:", response);
+            localStorage.setItem("ACCESS_TOKEN", response.accessToken);
+            localStorage.setItem("playerId", String(response.id));
+            localStorage.setItem("username", response.username);
+            navigate("/rooms");
+        } catch (err: any) {
+            console.error("Logging in error: ", err);
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError("An error occurred while logging in.");
+            }
+        }
     };
 
     const fields = [
@@ -39,6 +54,7 @@ const Login: React.FC = () => {
             footerText="Don’t have an account? "
             footerLinkText="Register now"
             footerLinkHref="/signup"
+            error={error || undefined}
         />
     );
 };

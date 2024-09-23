@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import AuthForm from "../AuthForm/AuthForm";
 import {useNavigate} from "react-router-dom";
+import {register} from "../../api/auth-api";
 
 const SignUp: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -16,9 +18,19 @@ const SignUp: React.FC = () => {
 
             return;
         }
+        try {
+            const response = await register({ username, password });
+            console.log("Registration successful: ", response);
+            navigate("/login");
+        } catch (err: any) {
+            console.error("Registering error: ", err);
 
-        console.log("Registration info: Username:", username, "Password:", password);
-        navigate("/login");
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError("An error occurred while registering.");
+            }
+        }
     };
 
     const fields = [
@@ -54,6 +66,7 @@ const SignUp: React.FC = () => {
             footerText="Have already registered? "
             footerLinkText="Login"
             footerLinkHref="/login"
+            error={error || undefined}
         />
     );
 };
