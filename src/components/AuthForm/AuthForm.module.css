@@ -43,6 +43,8 @@ body {
 }
 
 .formInput {
+    font-size: 20px;
+    color: var(--light-blue);
     padding: 10px;
     border: none;
     background-color: var(--dark-blue);
@@ -79,4 +81,9 @@ body {
 .authTextLink:hover {
     color: var(--turquoise-hovered);
     text-decoration: underline;
+}
+
+.error {
+    color: var(--red);
+    font-size: 24px;
 }
