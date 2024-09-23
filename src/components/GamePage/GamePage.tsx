@@ -9,28 +9,34 @@ import { GameResponseDto } from '../../types/dtos/game-response-dto';
 import { getGameById, leaveGame, makeMove } from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
+import { PlayerType } from '../../types/player-type';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
     const [game, setGame] = useState<GameResponseDto | null>(null);
     const navigate = useNavigate();
-    // const [cells, setCells] = useState<CellType[]>([]);
     // const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
-    // const [players, setPlayers] = useState<PlayerType[]>([]);
     const cells = game?.cells || [];
     const players = game?.players || [];
-    const currentPlayer = game?.players.find(player => player.isCurrent);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
+    const currentPlayer = game?.players.find(player => player.isCurrent);
+    // const [cells, setCells] = useState<CellType[]>([]);
+    // const [players, setPlayers] = useState<PlayerType[]>([]);
 
     useEffect(() => {
         fetchGame();
-    }, [players]);
+    }, []);
 
     const fetchGame = async () => {
         try {
             if (gameId) {
                 const response: GameResponseDto = await getGameById(gameId);
                 setGame(response);
+
+                // const current = response.players.find(player => player.isCurrent);
+                // if (current) {
+                //     setCurrentPlayer(current);
+                // }
                 // setCells(response.cells);
                 // setPlayers(response.players);
                 // setCurrentPlayer(currentPlayer || null);
@@ -51,6 +57,12 @@ const GamePage: React.FC = () => {
                 const moveDto: MakeMoveDto = { position: index, playerId: storedPlayerId};
                 const response = await makeMove(gameId, moveDto);
                 setGame(response);
+
+                // const current = response.players.find(player => player.isCurrent);
+                //
+                // if (current) {
+                //     setCurrentPlayer(current);
+                // }
             }
         } catch (error) {
             console.error('Failed to make move', error);

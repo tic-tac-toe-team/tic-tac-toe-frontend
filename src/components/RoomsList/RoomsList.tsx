@@ -50,8 +50,6 @@ const RoomList: React.FC = () => {
         if (response) {
             navigate(`/game/${response.gameId}`);
         }
-
-        console.log(response);
     }
 
     return (
