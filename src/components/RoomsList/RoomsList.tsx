@@ -1,29 +1,58 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import GameRoom from '../GameRoom/GameRoom';
 import CreateGameButton from '../CreateGameButton/CreateGameButton';
 import styles from './RoomsList.module.css';
-import { createGame } from '../../api/game-api'; // Імпортуємо функцію для створення гри
+import { createGame, getAllGames, joinGame } from '../../api/game-api';
+import { GameResponseDto } from '../../types/dtos/game-response-dto';
+import { JoinPlayerDto } from '../../types/dtos/join-player-dto';
+import { useNavigate } from 'react-router-dom';
 
 const RoomList: React.FC = () => {
-    const rooms = [
-        { id: 1, playersCount: 2 },
-        { id: 2, playersCount: 1 },
-        { id: 3, playersCount: 1 },
-        { id: 4, playersCount: 1 },
-        { id: 5, playersCount: 2 },
-        { id: 6, playersCount: 1 },
-        { id: 7, playersCount: 1 },
-        { id: 8, playersCount: 1 },
-    ];
+    const [games, setGames] = useState<GameResponseDto[]>([]);
+    const navigate = useNavigate();
+    const storedPlayerId = Number(localStorage.getItem('playerId'));
+
+    useEffect(() => {
+        fetchGames();
+    }, []);
+
+    const fetchGames = async () => {
+        try {
+            const response: GameResponseDto[] = await getAllGames();
+            setGames(response);
+        } catch (error) {
+            console.error('Failed to fetch games', error);
+        }
+    };
 
     const handleCreateGame = async () => {
         try {
-            const newGame = await createGame(3);
-            console.log('Game created:', newGame);
+            const dto: JoinPlayerDto = { playerId: storedPlayerId};
+            const response = await createGame(dto);
+
+            localStorage.setItem('playerId', '1');
+            // setGames(prevGames => [...prevGames, response]);
+            await fetchGames();
+
+            if (storedPlayerId && Number(storedPlayerId) === dto.playerId) {
+                navigate(`/game/${response.gameId}`);
+            }
+
         } catch (error) {
             console.error('Failed to create game', error);
         }
     };
+
+    const handleJoinGame = async (gameId: string) => {
+        const dto: JoinPlayerDto = { playerId: storedPlayerId};
+        const response = await joinGame(gameId, dto);
+
+        if (response) {
+            navigate(`/game/${response.gameId}`);
+        }
+
+        console.log(response);
+    }
 
     return (
         <div className={styles.list}>
@@ -32,11 +61,12 @@ const RoomList: React.FC = () => {
                 <p className={styles.symbol}>XO</p>
             </div>
             <div className={styles.container}>
-                {rooms.map((room) => (
+                {games.map((game) => (
                     <GameRoom
-                        key={room.id}
-                        id={room.id}
-                        playersCount={room.playersCount}
+                        key={game.gameId}
+                        onClick={handleJoinGame}
+                        id={game.gameId.toString()}
+                        playersCount={game.players.length}
                     />
                 ))}
             </div>

@@ -1,20 +1,21 @@
 import React from 'react';
 import Cell from '../Cell/Cell';
 import styles from './Board.module.css';
+import { CellType } from '../../types/cell-type';
 
 interface BoardProps {
-    cells: Array<'X' | 'O' | ''>;
-    onCellClick: (index: number) => void;
+    cells: Array<CellType>;
+    onClick: (index: number) => void;
 }
 
-const Board: React.FC<BoardProps> = ({ cells, onCellClick }) => {
+const Board: React.FC<BoardProps> = ({ cells, onClick }) => {
     return (
         <div className={styles.board}>
-            {cells.map((cell, index) => (
+            {cells && cells.map((cell, index) => (
                 <Cell
-                    key={index}
-                    value={cell}
-                    onClick={() => onCellClick(index)}
+                    key={cell.id}
+                    symbol={cell.symbol}
+                    onClick={() => onClick(index)}
                 />
             ))}
         </div>

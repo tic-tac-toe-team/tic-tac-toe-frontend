@@ -2,20 +2,18 @@ import React from 'react';
 import './Player.module.css';
 import styles from './Player.module.css';
 
-interface Player {
-    player: {
-        name: string;
-        symbol: string;
-    };
+interface PlayerProps {
+    name: string;
+    symbol: string;
 }
 
-const Player: React.FC<Player> = ({ player }) => {
-    const playerBackgroundColor = player.symbol === 'X' ? '#31c4be' : '#E89B30';
+const Player: React.FC<PlayerProps> = ({ name, symbol }) => {
+    const playerBackgroundColor = symbol === 'X' ? '#31c4be' : '#E89B30';
 
     return (
         <div className={styles.player}>
             <p className={styles.label} style={{ backgroundColor: playerBackgroundColor }}>
-                {player.name} - {player.symbol}
+                {name} - {symbol}
             </p>
         </div>
     );

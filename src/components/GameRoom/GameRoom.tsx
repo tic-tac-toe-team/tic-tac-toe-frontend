@@ -1,17 +1,17 @@
 import React from 'react';
 import styles from './GameRoom.module.css';
-import {Link} from "react-router-dom";
 
 interface GameRoomProps {
-    id: number;
+    id: string;
     playersCount: number;
+    onClick: (id: string) => void;
 }
 
-const GameRoom: React.FC<GameRoomProps> = ({ id, playersCount }) => (
-    <Link className={styles.button} to={'/game'}>
+const GameRoom: React.FC<GameRoomProps> = ({ id, playersCount, onClick }) => (
+    <button className={styles.button} onClick={() => onClick(id)}>
         <p>Room {id}</p>
         <p>Players: {playersCount}</p>
-    </Link>
+    </button>
 );
 
 export default GameRoom;
