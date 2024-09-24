@@ -22,7 +22,7 @@ const GamePage: React.FC = () => {
     const [game, setGame] = useState<GameResponseDto | null>(null);
     const cells = game?.cells || [];
 
-    const players = game?.players || [];
+    const players = game?.players.sort((a, b) => a.playerId - b.playerId) || [];
     const playerCount = players.length;
     const playerNames = usePlayerNames(players, playerCount);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
