@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import AuthForm from "../AuthForm/AuthForm";
-import {useNavigate} from "react-router-dom";
-import {register} from "../../api/auth-api";
+import React, { useState } from 'react';
+import AuthForm from '../AuthForm/AuthForm';
+import {useNavigate} from 'react-router-dom';
+import {register} from '../../api/auth-api';
 
 const SignUp: React.FC = () => {
     const [username, setUsername] = useState<string>("");
@@ -14,7 +14,7 @@ const SignUp: React.FC = () => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+            setError('Passwords do not match!');
 
             return;
         }
