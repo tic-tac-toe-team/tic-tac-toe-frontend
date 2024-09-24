@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './GameRoom.module.css';
 
 interface GameRoomProps {
-    id: string;
+    id: number;
     playersCount: number;
-    onClick: (id: string) => void;
+    onClick: (id: number) => void;
 }
 
 const GameRoom: React.FC<GameRoomProps> = ({ id, playersCount, onClick }) => (

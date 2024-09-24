@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Board from '../Board/Board';
 import Info from '../Info/Info';
-import Player from "../Player/Player";
-import LeaveGameButton from "../LeaveGameButton/LeaveGameButton";
+import Player from '../Player/Player';
+import LeaveGameButton from '../LeaveGameButton/LeaveGameButton';
 import styles from './GamePage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
 import {getGameById, leaveGame, makeMove, restartGame} from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
-import Modal from "../Modal/Modal";
-import {GameState} from "../../types/enums/game-state-enum";
+import Modal from '../Modal/Modal';
+import { GameState } from '../../types/enums/game-state-enum';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
@@ -18,55 +18,25 @@ const GamePage: React.FC = () => {
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [modalMessage, setModalMessage] = useState<string>('');
     const navigate = useNavigate();
-    // const [cells, setCells] = useState<CellType[]>([]);
-    // const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
-    // const [players, setPlayers] = useState<PlayerType[]>([]);
+    const game = useGameData(gameId);
     const cells = game?.cells || [];
     const players = game?.players || [];
-    const currentPlayer = game?.players.find(player => player.isCurrent);
+    const playerCount = players.length;
+    const playerNames = usePlayerNames(players, playerCount);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
+    const currentPlayer = players.find(player => player.isCurrent);
 
     const [winner, setWinner] = useState<string | null>(null);
-
-    useEffect(() => {
-        fetchGame();
-    }, [players]);
-
-    const fetchGame = async () => {
-        try {
-            if (gameId) {
-                const response: GameResponseDto = await getGameById(gameId);
-                setGame(response);
-                // setCells(response.cells);
-                // setPlayers(response.players);
-                // setCurrentPlayer(currentPlayer || null);
-
-                if (response.state === GameState.WIN && !winner) {
-                    const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
-                    setWinner(winningPlayer || null);
-                    setModalMessage(`Player ${winningPlayer} wins!`);
-                    setIsGameOver(true);
-                } else if (response.state === GameState.DRAW) {
-                    setModalMessage('It\'s a draw!');
-                    setIsGameOver(true);
-                }
-            }
-        } catch (error) {
-            console.error('Failed to fetch game', error);
-        }
-    }
 
     const handleMakeMove = async (index: number) => {
         try {
             if (currentPlayer?.playerId !== storedPlayerId) {
-                alert('It is not your turn to make a move.');
                 return;
             }
 
             if (gameId) {
-                const moveDto: MakeMoveDto = { position: index, playerId: storedPlayerId};
-                const response = await makeMove(gameId, moveDto);
-                setGame(response);
+                const moveDto: MakeMoveDto = { position: index, playerId: currentPlayer.playerId };
+                await makeMove(gameId, moveDto);
             }
         } catch (error) {
             console.error('Failed to make move', error);
@@ -76,7 +46,7 @@ const GamePage: React.FC = () => {
     const handleLeaveGame = async () => {
         try {
             if (gameId) {
-                const leaveGameDto: LeaveGameDto = {playerId: storedPlayerId};
+                const leaveGameDto: LeaveGameDto = { playerId: storedPlayerId };
                 await leaveGame(gameId, leaveGameDto);
                 navigate(`/rooms`);
             }
@@ -105,7 +75,7 @@ const GamePage: React.FC = () => {
                 {players.map((player) => (
                     <Player
                         key={player.playerId}
-                        name={player.playerId.toString()}
+                        name={playerNames[player.playerId]}
                         symbol={player.symbol}
                     />
                 ))}
@@ -115,7 +85,7 @@ const GamePage: React.FC = () => {
                 <Board cells={cells} onClick={handleMakeMove} />
             </div>
             <div className={styles.container}>
-                <LeaveGameButton onClick={handleLeaveGame}/>
+                <LeaveGameButton onClick={handleLeaveGame} />
             </div>
             <Modal
                 isOpen={isGameOver}

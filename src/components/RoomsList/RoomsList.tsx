@@ -29,8 +29,6 @@ const RoomList: React.FC = () => {
         try {
             const dto: JoinPlayerDto = { playerId: storedPlayerId};
             const response = await createGame(dto);
-
-            // setGames(prevGames => [...prevGames, response]);
             await fetchGames();
 
             if (storedPlayerId && Number(storedPlayerId) === dto.playerId) {
@@ -42,15 +40,13 @@ const RoomList: React.FC = () => {
         }
     };
 
-    const handleJoinGame = async (gameId: string) => {
+    const handleJoinGame = async (gameId: number) => {
         const dto: JoinPlayerDto = { playerId: storedPlayerId};
         const response = await joinGame(gameId, dto);
 
         if (response) {
             navigate(`/game/${response.gameId}`);
         }
-
-        console.log(response);
     }
 
     return (
@@ -64,7 +60,7 @@ const RoomList: React.FC = () => {
                     <GameRoom
                         key={game.gameId}
                         onClick={handleJoinGame}
-                        id={game.gameId.toString()}
+                        id={game.gameId}
                         playersCount={game.players.length}
                     />
                 ))}
