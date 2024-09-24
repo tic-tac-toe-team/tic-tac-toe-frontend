@@ -1,20 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Board from '../Board/Board';
 import Info from '../Info/Info';
 import Player from '../Player/Player';
 import LeaveGameButton from '../LeaveGameButton/LeaveGameButton';
 import styles from './GamePage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GameResponseDto } from '../../types/dtos/game-response-dto';
-import {getGameById, leaveGame, makeMove, restartGame} from '../../api/game-api';
+import {leaveGame, makeMove, restartGame} from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
 import Modal from '../Modal/Modal';
-import { GameState } from '../../types/enums/game-state-enum';
+import useGameData from '../../hooks/useGameData';
+import usePlayerNames from '../../hooks/usePlayerNames';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
-    const [game, setGame] = useState<GameResponseDto | null>(null);
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [modalMessage, setModalMessage] = useState<string>('');
     const navigate = useNavigate();
@@ -62,7 +61,6 @@ const GamePage: React.FC = () => {
                 setIsGameOver(false);
                 setModalMessage('');
                 setWinner(null);
-                await fetchGame();
             }
         } catch (error) {
             console.error('Failed to restart game', error);
