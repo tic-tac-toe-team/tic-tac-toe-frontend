@@ -25,6 +25,8 @@ const GamePage: React.FC = () => {
     const currentPlayer = game?.players.find(player => player.isCurrent);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
 
+    const [winner, setWinner] = useState<string | null>(null);
+
     useEffect(() => {
         fetchGame();
     }, [players]);
@@ -38,10 +40,12 @@ const GamePage: React.FC = () => {
                 // setPlayers(response.players);
                 // setCurrentPlayer(currentPlayer || null);
 
-                if (response.state == 'win') {
-                    setModalMessage(`Player ${currentPlayer} wins!`);
+                if (response.state === 'win' && !winner) {
+                    const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
+                    setWinner(winningPlayer || null);
+                    setModalMessage(`Player ${winningPlayer} wins!`);
                     setIsGameOver(true);
-                } else if (response.state == "draw") {
+                } else if (response.state === "draw") {
                     setModalMessage('It\'s a draw!');
                     setIsGameOver(true);
                 }
@@ -86,6 +90,7 @@ const GamePage: React.FC = () => {
                 await restartGame(gameId);
                 setIsGameOver(false);
                 setModalMessage('');
+                setWinner(null);
                 await fetchGame();
             }
         } catch (error) {
