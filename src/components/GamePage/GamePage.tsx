@@ -31,20 +31,20 @@ const GamePage: React.FC = () => {
     useEffect(() => {
         const fetchGame = async () => {
             try {
-              if (gameId) {
-                  const response: GameResponseDto = await getGameById(gameId);
-                  setGame(response);
+                if (gameId) {
+                    const response: GameResponseDto = await getGameById(gameId);
+                    setGame(response);
 
-                  if (game?.state === GameState.WIN && !winner) {
-                      const winningPlayer = game.players.find(player => player.isCurrent)?.symbol;
-                      setWinner(winningPlayer || null);
-                      setModalMessage(`Player ${winningPlayer} wins!`);
-                      setIsGameOver(true);
-                  } else if (game?.state === GameState.DRAW) {
-                      setModalMessage('It\'s a draw!');
-                      setIsGameOver(true);
-                  }
-              }
+                    if (game?.state === GameState.WIN && !winner) {
+                        const winningPlayer = game.players.find(player => player.isCurrent)?.symbol;
+                        setWinner(winningPlayer || null);
+                        setModalMessage(`Player ${winningPlayer} wins!`);
+                        setIsGameOver(true);
+                    } else if (game?.state === GameState.DRAW) {
+                        setModalMessage('It\'s a draw!');
+                        setIsGameOver(true);
+                    }
+                }
             } catch (error) {
                 console.error('Failed to fetch game', error);
             }
