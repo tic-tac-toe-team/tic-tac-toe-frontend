@@ -11,6 +11,7 @@ import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
 import Modal from '../Modal/Modal';
 import useGameData from '../../hooks/useGameData';
 import usePlayerNames from '../../hooks/usePlayerNames';
+import {GameState} from "../../types/enums/game-state-enum";
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
@@ -35,7 +36,17 @@ const GamePage: React.FC = () => {
 
             if (gameId) {
                 const moveDto: MakeMoveDto = { position: index, playerId: currentPlayer.playerId };
-                await makeMove(gameId, moveDto);
+                const response = await makeMove(gameId, moveDto);
+
+                if (response.state === GameState.WIN && !winner) {
+                    const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
+                    setWinner(winningPlayer || null);
+                    setModalMessage(`Player ${winningPlayer} wins!`);
+                    setIsGameOver(true);
+                } else if (response.state === GameState.DRAW) {
+                    setModalMessage('It\'s a draw!');
+                    setIsGameOver(true);
+                }
             }
         } catch (error) {
             console.error('Failed to make move', error);
