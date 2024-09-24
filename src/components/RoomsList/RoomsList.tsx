@@ -29,7 +29,6 @@ const RoomList: React.FC = () => {
         try {
             const dto: JoinPlayerDto = { playerId: storedPlayerId};
             const response = await createGame(dto);
-            // setGames(prevGames => [...prevGames, response]);
             await fetchGames();
 
             if (storedPlayerId && Number(storedPlayerId) === dto.playerId) {

@@ -3,7 +3,7 @@ import { PlayerResponseDto } from '../types/dtos/player-response-dto';
 
 const client = axiosClient();
 
-export const getPlayerById = async (id: number) => {
+export const getPlayerById = async (id: number): Promise<PlayerResponseDto> => {
     const response = await client.get(`/players/${id}`);
 
     return response.data;
