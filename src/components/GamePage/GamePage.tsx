@@ -35,12 +35,12 @@ const GamePage: React.FC = () => {
                     const response: GameResponseDto = await getGameById(gameId);
                     setGame(response);
 
-                    if (game?.state === GameState.WIN && !winner) {
-                        const winningPlayer = game.players.find(player => player.isCurrent)?.symbol;
+                    if (response.state === GameState.WIN && !winner) {
+                        const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
                         setWinner(winningPlayer || null);
                         setModalMessage(`Player ${winningPlayer} wins!`);
                         setIsGameOver(true);
-                    } else if (game?.state === GameState.DRAW) {
+                    } else if (response?.state === GameState.DRAW) {
                         setModalMessage('It\'s a draw!');
                         setIsGameOver(true);
                     }
