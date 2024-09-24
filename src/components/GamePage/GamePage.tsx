@@ -1,32 +1,63 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Board from '../Board/Board';
 import Info from '../Info/Info';
 import Player from '../Player/Player';
 import LeaveGameButton from '../LeaveGameButton/LeaveGameButton';
+import Modal from '../Modal/Modal';
+import usePlayerNames from '../../hooks/usePlayerNames';
 import styles from './GamePage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import {leaveGame, makeMove, restartGame} from '../../api/game-api';
+import { getGameById, leaveGame, makeMove, restartGame } from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
-import Modal from '../Modal/Modal';
-import useGameData from '../../hooks/useGameData';
-import usePlayerNames from '../../hooks/usePlayerNames';
-import {GameState} from "../../types/enums/game-state-enum";
+import { GameState } from '../../types/enums/game-state-enum';
+import { GameResponseDto } from '../../types/dtos/game-response-dto';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
+    const navigate = useNavigate();
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [modalMessage, setModalMessage] = useState<string>('');
-    const navigate = useNavigate();
-    const game = useGameData(gameId);
+    const [winner, setWinner] = useState<string | null>(null);
+    const [game, setGame] = useState<GameResponseDto | null>(null);
     const cells = game?.cells || [];
+
     const players = game?.players || [];
     const playerCount = players.length;
     const playerNames = usePlayerNames(players, playerCount);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
     const currentPlayer = players.find(player => player.isCurrent);
 
-    const [winner, setWinner] = useState<string | null>(null);
+    useEffect(() => {
+        const fetchGame = async () => {
+            try {
+              if (gameId) {
+                  const response: GameResponseDto = await getGameById(gameId);
+                  setGame(response);
+
+                  if (game?.state === GameState.WIN && !winner) {
+                      const winningPlayer = game.players.find(player => player.isCurrent)?.symbol;
+                      setWinner(winningPlayer || null);
+                      setModalMessage(`Player ${winningPlayer} wins!`);
+                      setIsGameOver(true);
+                  } else if (game?.state === GameState.DRAW) {
+                      setModalMessage('It\'s a draw!');
+                      setIsGameOver(true);
+                  }
+              }
+            } catch (error) {
+                console.error('Failed to fetch game', error);
+            }
+        };
+
+        fetchGame();
+
+        const interval = setInterval(fetchGame, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [gameId]);
 
     const handleMakeMove = async (index: number) => {
         try {
@@ -36,17 +67,7 @@ const GamePage: React.FC = () => {
 
             if (gameId) {
                 const moveDto: MakeMoveDto = { position: index, playerId: currentPlayer.playerId };
-                const response = await makeMove(gameId, moveDto);
-
-                if (response.state === GameState.WIN && !winner) {
-                    const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
-                    setWinner(winningPlayer || null);
-                    setModalMessage(`Player ${winningPlayer} wins!`);
-                    setIsGameOver(true);
-                } else if (response.state === GameState.DRAW) {
-                    setModalMessage('It\'s a draw!');
-                    setIsGameOver(true);
-                }
+                await makeMove(gameId, moveDto);
             }
         } catch (error) {
             console.error('Failed to make move', error);
