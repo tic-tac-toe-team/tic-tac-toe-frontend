@@ -41,7 +41,7 @@ const GamePage: React.FC = () => {
         const interval = setInterval(fetchGame, 1000);
 
         return () => clearInterval(interval);
-    }, [game, gameId]);
+    }, [gameId]);
 
     useEffect(() => {
         const fetchPlayerNames = async () => {
@@ -65,7 +65,6 @@ const GamePage: React.FC = () => {
     const handleMakeMove = async (index: number) => {
         try {
             if (currentPlayer?.playerId !== storedPlayerId) {
-                alert('It is not your turn to make a move.');
                 return;
             }
 
