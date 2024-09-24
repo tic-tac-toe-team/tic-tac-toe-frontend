@@ -10,6 +10,7 @@ import {getGameById, leaveGame, makeMove, restartGame} from '../../api/game-api'
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
 import Modal from "../Modal/Modal";
+import {GameState} from "../../types/enums/game-state-enum";
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
@@ -40,12 +41,12 @@ const GamePage: React.FC = () => {
                 // setPlayers(response.players);
                 // setCurrentPlayer(currentPlayer || null);
 
-                if (response.state === 'win' && !winner) {
+                if (response.state === GameState.WIN && !winner) {
                     const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
                     setWinner(winningPlayer || null);
                     setModalMessage(`Player ${winningPlayer} wins!`);
                     setIsGameOver(true);
-                } else if (response.state === "draw") {
+                } else if (response.state === GameState.DRAW) {
                     setModalMessage('It\'s a draw!');
                     setIsGameOver(true);
                 }
