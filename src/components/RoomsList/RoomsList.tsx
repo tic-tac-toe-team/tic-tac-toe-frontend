@@ -30,8 +30,6 @@ const RoomList: React.FC = () => {
         try {
             const dto: JoinPlayerDto = { playerId: storedPlayerId};
             const response = await createGame(dto);
-
-            // setGames(prevGames => [...prevGames, response]);
             await fetchGames();
 
             if (storedPlayerId && Number(storedPlayerId) === dto.playerId) {
@@ -42,24 +40,23 @@ const RoomList: React.FC = () => {
             console.error('Failed to create game', error);
         }
     };
-
-    const handleJoinGame = async (gameId: string) => {
-        const gameToJoin = games.find(game => game.gameId === Number(gameId));
+        
+    
+   const handleJoinGame = async (gameId: number) => {
+        const gameToJoin = games.find(game => game.gameId === gameId);
 
         if (gameToJoin && gameToJoin.players.length >= 2) {
             alert('This room already has two players. Please choose another one.');
 
             return;
         }
-
+     
         const dto: JoinPlayerDto = { playerId: storedPlayerId};
         const response = await joinGame(gameId, dto);
 
         if (response) {
             navigate(`/game/${response.gameId}`);
         }
-
-        console.log(response);
     }
 
     return (
@@ -78,7 +75,7 @@ const RoomList: React.FC = () => {
                     <GameRoom
                         key={game.gameId}
                         onClick={handleJoinGame}
-                        id={game.gameId.toString()}
+                        id={game.gameId}
                         playersCount={game.players.length}
                     />
                 ))}
