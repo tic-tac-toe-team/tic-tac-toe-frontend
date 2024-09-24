@@ -6,6 +6,7 @@ import { createGame, getAllGames, joinGame } from '../../api/game-api';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
 import { JoinPlayerDto } from '../../types/dtos/join-player-dto';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const RoomList: React.FC = () => {
     const [games, setGames] = useState<GameResponseDto[]>([]);
@@ -43,6 +44,14 @@ const RoomList: React.FC = () => {
     };
 
     const handleJoinGame = async (gameId: string) => {
+        const gameToJoin = games.find(game => game.gameId === Number(gameId));
+
+        if (gameToJoin && gameToJoin.players.length >= 2) {
+            alert('This room already has two players. Please choose another one.');
+
+            return;
+        }
+
         const dto: JoinPlayerDto = { playerId: storedPlayerId};
         const response = await joinGame(gameId, dto);
 
@@ -55,9 +64,14 @@ const RoomList: React.FC = () => {
 
     return (
         <div className={styles.list}>
-            <div className={styles.label}>
-                <h1>tic-tac-toe rooms</h1>
-                <p className={styles.symbol}>XO</p>
+            <div className={styles.header}>
+                <div className={styles.label}>
+                    <h1>tic-tac-toe rooms</h1>
+                    <p className={styles.symbol}>XO</p>
+                </div>
+                <button className={styles.backButton} onClick={() => {navigate('/');}}>
+                    <FaArrowLeft />Back
+                </button>
             </div>
             <div className={styles.container}>
                 {games.map((game) => (

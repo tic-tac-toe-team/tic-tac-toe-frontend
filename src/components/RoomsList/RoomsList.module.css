@@ -50,3 +50,27 @@
 
     cursor: pointer;
 }
+
+.backButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--light-blue);
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    gap:5px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.backButton:hover {
+    text-decoration: underline;
+    color: var(--light-blue-hovered);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
