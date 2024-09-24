@@ -11,7 +11,7 @@ interface BoardProps {
 const Board: React.FC<BoardProps> = ({ cells, onClick }) => {
     return (
         <div className={styles.board}>
-            {cells && cells.map((cell, index) => (
+            {cells.map((cell, index) => (
                 <Cell
                     key={cell.id}
                     symbol={cell.symbol}

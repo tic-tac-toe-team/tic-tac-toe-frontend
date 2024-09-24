@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
-const axiosClient = (token: string | null = null): AxiosInstance => {
+const axiosClient = (token?: string): AxiosInstance => {
     const headers = token
         ? {
             Authorization: `Bearer ${token}`,

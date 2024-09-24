@@ -14,7 +14,8 @@ import { GameState } from '../../types/enums/game-state-enum';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
 
 const GamePage: React.FC = () => {
-    const { gameId } = useParams<{ gameId: string }>();
+    const params = useParams<{ gameId: string }>();
+    const gameId = params.gameId!;
     const navigate = useNavigate();
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [modalMessage, setModalMessage] = useState<string>('');
@@ -32,15 +33,15 @@ const GamePage: React.FC = () => {
         const fetchGame = async () => {
             try {
                 if (gameId) {
-                    const response: GameResponseDto = await getGameById(gameId);
-                    setGame(response);
+                    const game = await getGameById(gameId);
+                    setGame(game);
 
-                    if (response.state === GameState.WIN && !winner) {
-                        const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
+                    if (game.state === GameState.WIN && !winner) {
+                        const winningPlayer = game.players.find(player => player.isCurrent)?.symbol;
                         setWinner(winningPlayer || null);
                         setModalMessage(`Player ${winningPlayer} wins!`);
                         setIsGameOver(true);
-                    } else if (response?.state === GameState.DRAW) {
+                    } else if (game?.state === GameState.DRAW) {
                         setModalMessage('It\'s a draw!');
                         setIsGameOver(true);
                     }
@@ -61,14 +62,15 @@ const GamePage: React.FC = () => {
 
     const handleMakeMove = async (index: number) => {
         try {
-            if (currentPlayer?.playerId !== storedPlayerId) {
+            const isSamePlayer = currentPlayer?.playerId == storedPlayerId;
+
+            if (!isSamePlayer) {
                 return;
             }
 
-            if (gameId) {
-                const moveDto: MakeMoveDto = { position: index, playerId: currentPlayer.playerId };
-                await makeMove(gameId, moveDto);
-            }
+            const moveDto: MakeMoveDto = { position: index, playerId: currentPlayer.playerId };
+            await makeMove(gameId, moveDto);
+
         } catch (error) {
             console.error('Failed to make move', error);
         }
@@ -76,11 +78,9 @@ const GamePage: React.FC = () => {
 
     const handleLeaveGame = async () => {
         try {
-            if (gameId) {
-                const leaveGameDto: LeaveGameDto = { playerId: storedPlayerId };
-                await leaveGame(gameId, leaveGameDto);
-                navigate(`/rooms`);
-            }
+            const leaveGameDto: LeaveGameDto = { playerId: storedPlayerId };
+            await leaveGame(gameId, leaveGameDto);
+            navigate(`/rooms`);
         } catch (error) {
             console.error('Failed to leave game', error);
         }

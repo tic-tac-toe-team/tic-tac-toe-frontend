@@ -12,7 +12,7 @@ export const getAllGames = async () => {
     return response.data;
 };
 
-export const getGameById = async (gameId: string) => {
+export const getGameById = async (gameId: string): Promise<GameResponseDto> => {
     const response = await client.get(`/games/${gameId}`);
 
     return response.data;
