@@ -15,6 +15,12 @@ const RoomList: React.FC = () => {
 
     useEffect(() => {
         fetchGames();
+
+        const interval = setInterval(fetchGames, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
     }, []);
 
     const fetchGames = async () => {
