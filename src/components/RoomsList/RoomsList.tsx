@@ -30,7 +30,6 @@ const RoomList: React.FC = () => {
             const dto: JoinPlayerDto = { playerId: storedPlayerId};
             const response = await createGame(dto);
 
-            localStorage.setItem('playerId', '1');
             // setGames(prevGames => [...prevGames, response]);
             await fetchGames();
 

@@ -6,13 +6,17 @@ import LeaveGameButton from "../LeaveGameButton/LeaveGameButton";
 import styles from './GamePage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GameResponseDto } from '../../types/dtos/game-response-dto';
-import { getGameById, leaveGame, makeMove } from '../../api/game-api';
+import {getGameById, leaveGame, makeMove, restartGame} from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
+import Modal from "../Modal/Modal";
+import {GameState} from "../../types/enums/game-state-enum";
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
     const [game, setGame] = useState<GameResponseDto | null>(null);
+    const [isGameOver, setIsGameOver] = useState<boolean>(false);
+    const [modalMessage, setModalMessage] = useState<string>('');
     const navigate = useNavigate();
     // const [cells, setCells] = useState<CellType[]>([]);
     // const [currentPlayer, setCurrentPlayer] = useState<PlayerType | null>(null);
@@ -21,6 +25,8 @@ const GamePage: React.FC = () => {
     const players = game?.players || [];
     const currentPlayer = game?.players.find(player => player.isCurrent);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
+
+    const [winner, setWinner] = useState<string | null>(null);
 
     useEffect(() => {
         fetchGame();
@@ -34,6 +40,16 @@ const GamePage: React.FC = () => {
                 // setCells(response.cells);
                 // setPlayers(response.players);
                 // setCurrentPlayer(currentPlayer || null);
+
+                if (response.state === GameState.WIN && !winner) {
+                    const winningPlayer = response.players.find(player => player.isCurrent)?.symbol;
+                    setWinner(winningPlayer || null);
+                    setModalMessage(`Player ${winningPlayer} wins!`);
+                    setIsGameOver(true);
+                } else if (response.state === GameState.DRAW) {
+                    setModalMessage('It\'s a draw!');
+                    setIsGameOver(true);
+                }
             }
         } catch (error) {
             console.error('Failed to fetch game', error);
@@ -69,6 +85,20 @@ const GamePage: React.FC = () => {
         }
     }
 
+    const handleNewRound = async () => {
+        try {
+            if (gameId) {
+                await restartGame(gameId);
+                setIsGameOver(false);
+                setModalMessage('');
+                setWinner(null);
+                await fetchGame();
+            }
+        } catch (error) {
+            console.error('Failed to restart game', error);
+        }
+    };
+
     return (
         <div className={styles.game}>
             <div className={styles.players}>
@@ -87,6 +117,12 @@ const GamePage: React.FC = () => {
             <div className={styles.container}>
                 <LeaveGameButton onClick={handleLeaveGame}/>
             </div>
+            <Modal
+                isOpen={isGameOver}
+                onQuit={handleLeaveGame}
+                onNewRound={handleNewRound}
+                message={modalMessage}
+            />
         </div>
     );
 };
