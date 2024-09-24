@@ -1,66 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Board from '../Board/Board';
 import Info from '../Info/Info';
 import Player from '../Player/Player';
 import LeaveGameButton from '../LeaveGameButton/LeaveGameButton';
 import styles from './GamePage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GameResponseDto } from '../../types/dtos/game-response-dto';
-import { getGameById, leaveGame, makeMove } from '../../api/game-api';
+import { leaveGame, makeMove } from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
-import { getPlayerById } from '../../api/player-api';
+import useGameData from '../../hooks/useGameData';
+import usePlayerNames from '../../hooks/usePlayerNames';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
     const navigate = useNavigate();
-    const [game, setGame] = useState<GameResponseDto | null>(null);
+    const game = useGameData(gameId);
     const cells = game?.cells || [];
     const players = game?.players || [];
-    const currentPlayer = players.find(player => player.isCurrent);
+    const playerCount = players.length;
+    const playerNames = usePlayerNames(players, playerCount);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
-    const [playerNames, setPlayerNames] = useState<{ [key: number]: string }>({});
-
-    useEffect(() => {
-        const fetchGame = async () => {
-            try {
-                if (gameId) {
-                    const response: GameResponseDto = await getGameById(gameId);
-
-                    if (JSON.stringify(response) !== JSON.stringify(game)) {
-                        setGame(response);
-                    }
-                }
-            } catch (error) {
-                console.error('Failed to fetch game', error);
-            }
-        };
-
-        fetchGame();
-
-        const interval = setInterval(fetchGame, 1000);
-
-        return () => clearInterval(interval);
-    }, [gameId]);
-
-    useEffect(() => {
-        const fetchPlayerNames = async () => {
-            const newPlayerNames: { [key: number]: string } = {};
-
-            for (const player of players) {
-                const playerData = await getPlayerById(player.playerId);
-                newPlayerNames[player.playerId] = playerData.username;
-            }
-
-            setPlayerNames(newPlayerNames);
-        };
-
-        const hasPlayers = players.length > 0;
-
-        if (hasPlayers) {
-            fetchPlayerNames();
-        }
-    }, [players]);
+    const currentPlayer = players.find(player => player.isCurrent);
 
     const handleMakeMove = async (index: number) => {
         try {
@@ -70,8 +30,7 @@ const GamePage: React.FC = () => {
 
             if (gameId) {
                 const moveDto: MakeMoveDto = { position: index, playerId: currentPlayer.playerId };
-                const response = await makeMove(gameId, moveDto);
-                setGame(response);
+                await makeMove(gameId, moveDto);
             }
         } catch (error) {
             console.error('Failed to make move', error);
