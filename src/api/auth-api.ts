@@ -1,25 +1,8 @@
 import axiosClient from './axios-client';
-
-interface RegisterRequest {
-    username: string;
-    password: string;
-}
-
-interface RegisterResponse {
-    id: number;
-    username: string;
-}
-
-interface LoginRequest {
-    username: string;
-    password: string;
-}
-
-interface LoginResponse {
-    id: number;
-    username: string;
-    accessToken: string;
-}
+import {RegisterRequest} from "../types/dtos/register-request-dto";
+import {RegisterResponse} from "../types/dtos/register-response-dto";
+import {LoginRequest} from "../types/dtos/login-request-dto";
+import {LoginResponse} from "../types/dtos/login-response-dto";
 
 export const register = async (data: RegisterRequest): Promise<RegisterResponse> => {
     const client = axiosClient();

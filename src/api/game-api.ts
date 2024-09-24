@@ -39,3 +39,8 @@ export const makeMove = async (gameId: string, dto: MakeMoveDto): Promise<GameRe
 export const leaveGame = async (gameId: string, dto: LeaveGameDto): Promise<void> => {
     return await client.post(`/games/${gameId}/leave`, dto);
 };
+
+export const restartGame = async (gameId: string): Promise<void> => {
+    return await client.post(`/games/${gameId}/restart`);
+};
+

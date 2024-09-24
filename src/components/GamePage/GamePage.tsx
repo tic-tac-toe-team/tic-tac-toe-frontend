@@ -5,14 +5,18 @@ import Player from '../Player/Player';
 import LeaveGameButton from '../LeaveGameButton/LeaveGameButton';
 import styles from './GamePage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { leaveGame, makeMove } from '../../api/game-api';
+import { GameResponseDto } from '../../types/dtos/game-response-dto';
+import {getGameById, leaveGame, makeMove, restartGame} from '../../api/game-api';
 import { MakeMoveDto } from '../../types/dtos/make-move-dto';
 import { LeaveGameDto } from '../../types/dtos/leave-game-dto';
-import useGameData from '../../hooks/useGameData';
-import usePlayerNames from '../../hooks/usePlayerNames';
+import Modal from '../Modal/Modal';
+import { GameState } from '../../types/enums/game-state-enum';
 
 const GamePage: React.FC = () => {
     const { gameId } = useParams<{ gameId: string }>();
+    const [game, setGame] = useState<GameResponseDto | null>(null);
+    const [isGameOver, setIsGameOver] = useState<boolean>(false);
+    const [modalMessage, setModalMessage] = useState<string>('');
     const navigate = useNavigate();
     const game = useGameData(gameId);
     const cells = game?.cells || [];
@@ -21,6 +25,8 @@ const GamePage: React.FC = () => {
     const playerNames = usePlayerNames(players, playerCount);
     const storedPlayerId = Number(localStorage.getItem('playerId'));
     const currentPlayer = players.find(player => player.isCurrent);
+
+    const [winner, setWinner] = useState<string | null>(null);
 
     const handleMakeMove = async (index: number) => {
         try {
@@ -49,6 +55,20 @@ const GamePage: React.FC = () => {
         }
     }
 
+    const handleNewRound = async () => {
+        try {
+            if (gameId) {
+                await restartGame(gameId);
+                setIsGameOver(false);
+                setModalMessage('');
+                setWinner(null);
+                await fetchGame();
+            }
+        } catch (error) {
+            console.error('Failed to restart game', error);
+        }
+    };
+
     return (
         <div className={styles.game}>
             <div className={styles.players}>
@@ -67,6 +87,12 @@ const GamePage: React.FC = () => {
             <div className={styles.container}>
                 <LeaveGameButton onClick={handleLeaveGame} />
             </div>
+            <Modal
+                isOpen={isGameOver}
+                onQuit={handleLeaveGame}
+                onNewRound={handleNewRound}
+                message={modalMessage}
+            />
         </div>
     );
 };
